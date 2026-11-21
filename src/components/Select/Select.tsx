@@ -103,7 +103,7 @@ export function Select({ label, options, value: valueProp, defaultValue, onChang
           className={cx('cds-input', `cds-input--${size}`, 'cds-select__trigger', error && 'is-error', disabled && 'is-disabled', open && 'is-open')}
           aria-haspopup="listbox"
           aria-expanded={open}
-          aria-controls={`${id}-list`}
+          aria-controls={open ? `${id}-list` : undefined}
           aria-labelledby={`${label ? `${id}-label ` : ''}${id}`}
           aria-invalid={error ? true : undefined}
           aria-describedby={descId}

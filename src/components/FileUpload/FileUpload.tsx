@@ -101,21 +101,24 @@ export function FileUpload({ label, value, defaultValue = [], onChange, accept, 
         required={required && files.length === 0}
         aria-describedby={err || helperText ? `${id}-msg` : undefined}
         aria-invalid={err ? true : undefined}
+        aria-label={label ? undefined : '파일 선택'}
         onChange={(e) => { add(e.target.files); e.target.value = ''; }}
       />
-      <label
-        htmlFor={id}
+      {/* 눌러서 여는 영역. 이름은 위 라벨 하나만 갖도록 스크린리더에서는 숨기고, 키보드는 input이 받는다. */}
+      <div
         className={cx('cds-upload__zone', dragging && 'is-dragging', err && 'is-error', (disabled || full) && 'is-disabled')}
+        onClick={() => { if (!disabled && !full) inputRef.current?.click(); }}
         onDragOver={(e) => { e.preventDefault(); if (!disabled && !full) setDragging(true); }}
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
+        aria-hidden="true"
       >
         <UploadIcon className="cds-upload__icon" aria-hidden="true" />
         <span className="cds-upload__main">
           {full ? `${maxFiles}개를 모두 골랐어요` : <><span className="cds-upload__link">파일 선택</span> 또는 여기로 끌어다 놓기</>}
         </span>
         {autoHint && <span className="cds-upload__hint">{autoHint}</span>}
-      </label>
+      </div>
       {files.length > 0 && (
         <ul className="cds-upload__list" aria-label="고른 파일">
           {files.map((f, i) => (
