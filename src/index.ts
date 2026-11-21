@@ -35,3 +35,5 @@ export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './compone
 export { Slider, type SliderProps } from './components/Slider/Slider';
 export { FileUpload, type FileUploadProps } from './components/FileUpload/FileUpload';
 export { Divider, type DividerProps } from './components/Divider/Divider';
+export { createBrandTheme, brandThemeCss, applyBrandTheme, contrast, type BrandTheme, type BrandTokens } from './theme/brand';
+export { BrandStyle, type BrandStyleProps } from './theme/BrandStyle';

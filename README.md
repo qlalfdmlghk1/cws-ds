@@ -10,7 +10,7 @@ npm에 올리지 않고 GitHub에서 바로 설치해요. 설치할 때 `prepare
 
 ```bash
 npm i github:qlalfdmlghk1/cws-ds
-# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.2.0
+# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.3.0
 ```
 
 ## 사용
@@ -66,6 +66,33 @@ import '@choi/ds/fonts.css';
 
 각 컴포넌트의 props 설명은 타입 정의(JSDoc)에 한국어로 들어 있어서 에디터에서 바로 보여요.
 
+## 브랜드 색 바꾸기
+
+프로젝트마다 서비스 메인 색이 달라도 **색 하나만 넣으면** 버튼·체크박스·탭·슬라이더·포커스 링이 함께 바뀌어요. 라이트·다크 값을 만들고, 글자 4.5:1 · 채움과 포커스 링 3:1 대비가 모자라면 밝기를 조금 옮겨 맞춰요.
+
+```tsx
+// 1) React — 서버 렌더링 첫 화면부터 적용 (Next.js app/layout.tsx의 <head>에)
+import { BrandStyle } from '@choi/ds';
+<BrandStyle color="#0E9888" />
+```
+
+```bash
+# 2) CSS 파일로 고정 — 만든 파일을 앱에서 import (불러오는 순서와 상관없이 기본 색보다 우선)
+npx choi-ds-brand "#0E9888" > src/brand.css
+```
+
+```ts
+// 3) 실행 중에 바꾸기
+import { applyBrandTheme } from '@choi/ds';
+const reset = applyBrandTheme('#2B45E0');
+
+// 값만 필요하면 (React 없이 서버·스크립트에서도: '@choi/ds/brand')
+import { createBrandTheme, brandThemeCss } from '@choi/ds/brand';
+const { light, dark, notes } = createBrandTheme('#EAB308'); // notes: 무엇을 보정했는지
+```
+
+Storybook 툴바의 "브랜드 색"에서 여러 색으로 바로 비교할 수 있어요.
+
 ## 토큰
 
 - `src/tokens/tokens.json`이 **단일 기준**이에요. 값을 바꾸면 `npm run tokens`로 `tokens.css`를 다시 만들어요.
@@ -83,6 +110,7 @@ npm run build            # 토큰 생성 → 타입 검사 → 라이브러리 �
 npm run build-storybook  # Storybook 정적 빌드 (storybook-static/)
 npm run build:artifact   # Claude Design System 아티팩트용 bundle.js·bundle.css·index.d.ts (artifact/)
 npm run typecheck
+npm test                 # 단위 테스트 (Vitest) — 브랜드 색 대비 등
 ```
 
 Storybook 툴바의 "테마"로 라이트와 다크를 오가고, 아래 Accessibility 패널에서 대비·ARIA 문제를 확인해요.
@@ -97,12 +125,14 @@ src/
 ├─ styles/                 ← tokens.css(생성) · base.css · components.css
 ├─ fonts/ · fonts.css      ← Pretendard
 ├─ internal/               ← 공용 훅·아이콘·날짜 유틸
+├─ theme/                  ← 브랜드 색 생성 (createBrandTheme · BrandStyle)
 ├─ components/<Name>/      ← 컴포넌트별 .tsx + .stories.tsx
 ├─ stories/                ← 스토리용 데모 아이콘·레이아웃 (패키지에 안 들어감)
 ├─ Introduction.mdx        ← Storybook 첫 페이지
 └─ index.ts
 .storybook/                ← Storybook 설정 (테마 툴바, 접근성 검사)
 scripts/                   ← 토큰 생성 · 아티팩트 번들 생성
+bin/                       ← choi-ds-brand 명령
 playground/                ← 개발용 데모 페이지
 ```
 

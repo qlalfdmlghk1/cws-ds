@@ -61,7 +61,7 @@ for (const m of exportsSrc.matchAll(/export\s*\{([^}]*)\}/g)) {
   }
 }
 // Components the artifact lists: PascalCase exports, minus parts that only live inside another.
-const notCards = new Set(['CardHeader', 'CardBody', 'CardFooter', 'Calendar', 'AvatarGroup']);
+const notCards = new Set(['CardHeader', 'CardBody', 'CardFooter', 'Calendar', 'AvatarGroup', 'BrandStyle']);
 const components = names.filter((n) => /^[A-Z]/.test(n) && !notCards.has(n)).map((name) => ({ name }));
 const header = `/* @ds-bundle: ${JSON.stringify({ format: 4, namespace: 'ChoiDS', components })} */\n`;
 const js = header + res.outputFiles[0].text.replace(/\s*$/, '') + '\nwindow.ChoiDS = __ChoiDS;\n';
