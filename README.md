@@ -1,6 +1,6 @@
 # CHOI Design System (`@choi/ds`)
 
-개인 프로젝트에서 쓰는 React + TypeScript 디자인 시스템이에요. 컴포넌트 30개, 라이트/다크 테마, 접근성(대비 4.5:1, 키보드 조작, ARIA)을 기본으로 갖추고 있어요.
+개인 프로젝트에서 쓰는 React + TypeScript 디자인 시스템이에요. 컴포넌트 39개, 라이트/다크 테마, 접근성(대비 4.5:1, 키보드 조작, ARIA)을 기본으로 갖추고 있어요.
 
 > 디자인 기준 문서는 claude.ai의 **CHOI Design System** 아티팩트예요. 색·간격 같은 값은 둘 다 `src/tokens/tokens.json` 하나를 기준으로 맞춰요.
 
@@ -10,7 +10,7 @@ npm에 올리지 않고 GitHub에서 바로 설치해요. 설치할 때 `prepare
 
 ```bash
 npm i github:qlalfdmlghk1/cws-ds
-# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.1.0
+# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.2.0
 ```
 
 ## 사용
@@ -59,10 +59,10 @@ import '@choi/ds/fonts.css';
 | 그룹 | 컴포넌트 |
 | --- | --- |
 | Actions | `Button` `IconButton` `Chip` `DropdownMenu` |
-| Form | `TextInput` `Textarea` `Select` `MultiSelect` `Checkbox` `CheckGroup` `Radio` `RadioGroup` `Switch` `Datepicker` `Calendar` |
-| Data | `Table` `Card` `CardHeader` `CardBody` `CardFooter` `StatCard` `Badge` `Avatar` `AvatarGroup` |
-| Navigation | `Tabs` `Pagination` |
-| Feedback | `Modal` `ConfirmModal` `Toast` `ToastProvider` `useToast` `Tooltip` `Popover` `Skeleton` |
+| Form | `TextInput` `Textarea` `Select` `MultiSelect` `Checkbox` `CheckGroup` `Radio` `RadioGroup` `Switch` `Datepicker` `Calendar` `Slider` `FileUpload` |
+| Data | `Table` `Card` `CardHeader` `CardBody` `CardFooter` `StatCard` `Badge` `Avatar` `AvatarGroup` `Accordion` `Divider` |
+| Navigation | `Tabs` `Pagination` `Breadcrumb` |
+| Feedback | `Modal` `ConfirmModal` `Toast` `ToastProvider` `useToast` `Tooltip` `Popover` `Skeleton` `Alert` `Spinner` `Progress` `Drawer` |
 
 각 컴포넌트의 props 설명은 타입 정의(JSDoc)에 한국어로 들어 있어서 에디터에서 바로 보여요.
 
@@ -77,10 +77,19 @@ import '@choi/ds/fonts.css';
 
 ```bash
 npm install
-npm run dev        # playground (모든 컴포넌트 한 화면)
-npm run build      # 토큰 생성 → 타입 검사 → 라이브러리 빌드 (dist/)
+npm run dev              # playground (모든 컴포넌트 한 화면)
+npm run storybook        # Storybook (http://localhost:6006) — 컴포넌트별 예시·props·접근성 검사
+npm run build            # 토큰 생성 → 타입 검사 → 라이브러리 빌드 (dist/)
+npm run build-storybook  # Storybook 정적 빌드 (storybook-static/)
+npm run build:artifact   # Claude Design System 아티팩트용 bundle.js·bundle.css·index.d.ts (artifact/)
 npm run typecheck
 ```
+
+Storybook 툴바의 "테마"로 라이트와 다크를 오가고, 아래 Accessibility 패널에서 대비·ARIA 문제를 확인해요.
+
+### 아티팩트와 맞추기
+
+Claude Design System 아티팩트의 컴포넌트는 이 저장소 코드에서 만들어요. 컴포넌트를 고친 뒤에는 `npm run build && npm run build:artifact`를 돌리고, `artifact/components/`의 세 파일을 아티팩트의 `project/components/`에 올려요. 그래서 아티팩트와 패키지가 같은 코드로 동작해요.
 
 ```
 src/
@@ -88,8 +97,12 @@ src/
 ├─ styles/                 ← tokens.css(생성) · base.css · components.css
 ├─ fonts/ · fonts.css      ← Pretendard
 ├─ internal/               ← 공용 훅·아이콘·날짜 유틸
-├─ components/<Name>/      ← 컴포넌트별 .tsx
+├─ components/<Name>/      ← 컴포넌트별 .tsx + .stories.tsx
+├─ stories/                ← 스토리용 데모 아이콘·레이아웃 (패키지에 안 들어감)
+├─ Introduction.mdx        ← Storybook 첫 페이지
 └─ index.ts
+.storybook/                ← Storybook 설정 (테마 툴바, 접근성 검사)
+scripts/                   ← 토큰 생성 · 아티팩트 번들 생성
 playground/                ← 개발용 데모 페이지
 ```
 

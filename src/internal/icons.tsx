@@ -59,3 +59,9 @@ export const ToneIcon = ({ tone }: { tone: 'success' | 'danger' | 'info' }) => (
     {tone === 'info' && (<><path d="M10 9.25v4.5" /><path d="M10 6.4v.15" /></>)}
   </svg>
 );
+export const UploadIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" {...stroke()} {...p}><path d="M12 15V4" /><path d="M7.5 8.5L12 4l4.5 4.5" /><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" /></svg>
+);
+export const FileIcon = (p: SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 20 20" {...stroke(1.6)} {...p}><path d="M11.5 2.5H6a1.5 1.5 0 0 0-1.5 1.5v12A1.5 1.5 0 0 0 6 17.5h8a1.5 1.5 0 0 0 1.5-1.5V6.5z" /><path d="M11.5 2.5v4h4" /></svg>
+);

@@ -3,3 +3,5 @@ dist
 .playground-dist
 *.log
 .DS_Store
+artifact/
+storybook-static

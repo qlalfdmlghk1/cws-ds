@@ -1,0 +1,27 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="소개" />
+
+# CHOI Design System
+
+개인 프로젝트에서 쓰는 React + TypeScript 디자인 시스템이에요. 바이올렛 브랜드 색, Pretendard 글꼴, 라이트와 다크 테마를 갖추고 있어요.
+
+- **테마 바꾸기**: 위 툴바의 "테마"에서 라이트와 다크를 오가요. 모든 컴포넌트가 토큰만 쓰기 때문에 함께 바뀌어요.
+- **접근성 확인**: 아래 패널의 Accessibility 탭에서 대비와 ARIA 문제를 바로 볼 수 있어요.
+- **props**: 각 컴포넌트의 Docs 페이지에 한국어 설명과 함께 정리돼 있어요.
+
+## 설치
+
+```bash
+npm i github:qlalfdmlghk1/cws-ds
+```
+
+```tsx
+import '@choi/ds/fonts.css';
+import '@choi/ds/styles.css';
+import { Button } from '@choi/ds';
+```
+
+## 같은 코드, 두 곳
+
+Claude Design System 아티팩트의 컴포넌트도 이 저장소 코드에서 `npm run build:artifact`로 만들어요. 그래서 아티팩트에서 보는 동작과 Storybook, 실제 프로젝트의 동작이 같아요.

@@ -7,7 +7,7 @@ import { copyFileSync, cpSync, mkdirSync } from 'node:fs';
 export default defineConfig({
   plugins: [
     react(),
-    dts({ include: ['src'], exclude: ['playground'], rollupTypes: true, tsconfigPath: './tsconfig.json' }),
+    dts({ include: ['src'], exclude: ['playground', 'src/**/*.stories.tsx', 'src/stories/**'], rollupTypes: true, tsconfigPath: './tsconfig.json' }),
     {
       name: 'copy-token-files',
       closeBundle() {

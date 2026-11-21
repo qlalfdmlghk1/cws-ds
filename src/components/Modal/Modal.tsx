@@ -1,7 +1,8 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { cx } from '../../internal/cx';
-import { FOCUSABLE, useFieldId } from '../../internal/hooks';
+import { useFieldId } from '../../internal/hooks';
+import { useDialog } from '../../internal/useDialog';
 import { CloseIcon } from '../../internal/icons';
 import { IconButton } from '../IconButton/IconButton';
 import { Button } from '../Button/Button';
@@ -30,34 +31,7 @@ export interface ModalProps {
 export function Modal({ open, onClose, title, description, children, footer, size = 'md', closeOnOverlay = true, hideClose, role = 'dialog', id: idProp, className }: ModalProps) {
   const id = useFieldId(idProp);
   const panelRef = useRef<HTMLDivElement>(null);
-  const onCloseRef = useRef(onClose);
-  onCloseRef.current = onClose;
-
-  useEffect(() => {
-    if (!open) return;
-    const opener = document.activeElement as HTMLElement | null;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const panel = panelRef.current;
-    const inside = (sel: string) => panel?.querySelector(sel)?.querySelector<HTMLElement>(FOCUSABLE) ?? null;
-    const target = panel?.querySelector<HTMLElement>('[data-autofocus]') ?? inside('.cds-modal__body') ?? inside('.cds-modal__foot') ?? panel;
-    target?.focus({ preventScroll: true });
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { e.stopPropagation(); onCloseRef.current(); return; }
-      if (e.key !== 'Tab' || !panel) return;
-      const items = panel.querySelectorAll<HTMLElement>(FOCUSABLE);
-      if (!items.length) { e.preventDefault(); return; }
-      const first = items[0], last = items[items.length - 1];
-      if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-    };
-    document.addEventListener('keydown', onKey, true);
-    return () => {
-      document.removeEventListener('keydown', onKey, true);
-      document.body.style.overflow = prevOverflow;
-      opener?.focus?.({ preventScroll: true });
-    };
-  }, [open]);
+  useDialog(open, panelRef, onClose, 'cds-modal');
 
   if (!open) return null;
   return createPortal(
