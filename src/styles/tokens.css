@@ -1,0 +1,121 @@
+/* CHOI Design System — generated from tokens.json. Do not edit by hand: run `npm run tokens`. */
+
+:root,
+[data-theme='light'] {
+  --surface: #ffffff;
+  --surface-raised: #f5f5f7;
+  --surface-hover: #ebeaef;
+  --line: #e6e5ea;
+  --line-strong: #8b8994;
+  --ink: #18171c;
+  --ink-muted: #5e5c66;
+  --ink-disabled: #a09ea8;
+  --brand: #7c3aed;
+  --brand-hover: #6d28d9;
+  --brand-soft: #f3effe;
+  --brand-ink: #5b21b6;
+  --on-brand: #ffffff;
+  --success: #15803d;
+  --success-soft: #e9f6ee;
+  --success-ink: #166534;
+  --on-success: #ffffff;
+  --danger: #c62828;
+  --danger-hover: #a51f1f;
+  --danger-soft: #fdeeee;
+  --danger-ink: #a51f1f;
+  --on-danger: #ffffff;
+  --knob: #ffffff;
+  --scrim: rgba(16, 15, 20, 0.48);
+  --focus: #7c3aed;
+  --shadow-md: 0 8px 24px rgba(16, 15, 20, 0.12), 0 2px 6px rgba(16, 15, 20, 0.08);
+  --shadow-lg: 0 24px 48px rgba(16, 15, 20, 0.18), 0 4px 12px rgba(16, 15, 20, 0.08);
+}
+
+[data-theme='dark'] {
+  --surface: #131217;
+  --surface-raised: #1c1b21;
+  --surface-hover: #26252c;
+  --line: #2d2c33;
+  --line-strong: #63616b;
+  --ink: #f0eff3;
+  --ink-muted: #a6a4ae;
+  --ink-disabled: #63616b;
+  --brand: #a78bfa;
+  --brand-hover: #c4b5fd;
+  --brand-soft: #2a1f47;
+  --brand-ink: #c4b5fd;
+  --on-brand: #1e0b45;
+  --success: #4ade80;
+  --success-soft: #0f2a1a;
+  --success-ink: #4ade80;
+  --on-success: #052e16;
+  --danger: #f87171;
+  --danger-hover: #fca5a5;
+  --danger-soft: #3a1518;
+  --danger-ink: #fca5a5;
+  --on-danger: #2a0707;
+  --knob: #f0eff3;
+  --scrim: rgba(0, 0, 0, 0.64);
+  --focus: #c4b5fd;
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 24px 48px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+  --font-sans: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+}
+
+.cds-text-display {
+  font-family: var(--font-sans);
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.cds-text-title {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.cds-text-subtitle {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 600;
+}
+.cds-text-body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 24px;
+  font-weight: 400;
+}
+.cds-text-body-sm {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+}
+.cds-text-label {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+}
+.cds-text-caption {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+}
