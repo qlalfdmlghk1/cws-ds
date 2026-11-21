@@ -9,8 +9,8 @@
 npm에 올리지 않고 GitHub에서 바로 설치해요. 설치할 때 `prepare` 스크립트가 자동으로 빌드해요.
 
 ```bash
-npm i github:<계정명>/choi-ds
-# 또는 pnpm add github:<계정명>/choi-ds
+npm i github:qlalfdmlghk1/cws-ds
+# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.1.0
 ```
 
 ## 사용

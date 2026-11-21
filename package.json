@@ -4,8 +4,12 @@
   "description": "CHOI Design System — React + TypeScript component library",
   "type": "module",
   "license": "MIT",
-  "sideEffects": ["**/*.css"],
-  "files": ["dist"],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -40,5 +44,10 @@
     "typescript": "~5.7.2",
     "vite": "^6.2.0",
     "vite-plugin-dts": "^4.5.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qlalfdmlghk1/cws-ds.git"
+  },
+  "homepage": "https://github.com/qlalfdmlghk1/cws-ds#readme"
 }
