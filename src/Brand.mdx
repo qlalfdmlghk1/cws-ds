@@ -22,12 +22,12 @@ import { Meta } from '@storybook/addon-docs/blocks';
 // app/layout.tsx
 import '@choi/ds/fonts.css';
 import '@choi/ds/styles.css';
-import { BrandStyle } from '@choi/ds';
+import { AppBrandStyle } from '@choi/ds';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ko" data-theme="light">
-      <head><BrandStyle color="#0E9888" /></head>
+      <head><AppBrandStyle color="#0E9888" /></head>
       <body>{children}</body>
     </html>
   );

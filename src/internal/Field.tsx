@@ -26,7 +26,7 @@ export function FieldMessage(props: { id?: string; error?: ReactNode; helperText
   );
 }
 
-/** 화면에 label 없이 쓸 때 컴포넌트 이름을 주는 props. 버튼형 입력(Select·MultiSelect·Datepicker)이 받는다. */
+/** 화면에 label 없이 쓸 때 컴포넌트 이름을 주는 props. 버튼형 입력(AppSelect·AppMultiSelect·AppDatepicker)이 받는다. */
 export interface FieldNameProps {
   /** 보이는 label이 없을 때 스크린리더가 읽을 이름. "조회 기간". */
   'aria-label'?: string;

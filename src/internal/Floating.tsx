@@ -12,7 +12,7 @@ export interface FloatingOptions {
   enabled: boolean;
   /** 트리거 왼쪽 끝(start) 또는 오른쪽 끝(end)에 맞춘다. */
   align?: 'start' | 'end';
-  /** 트리거와 같은 너비. 목록형(Select·MultiSelect). */
+  /** 트리거와 같은 너비. 목록형(AppSelect·AppMultiSelect). */
   matchWidth?: boolean;
   /** 트리거와의 간격(px). */
   gap?: number;

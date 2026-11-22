@@ -181,7 +181,7 @@ const STYLE_ID = 'cds-brand-theme';
 
 /**
  * 브라우저에서 바로 적용한다 (<head>에 <style> 하나). 다시 부르면 바꾸고, 돌려준 함수를 부르면 원래 색으로.
- * 서버 렌더링에서 첫 화면부터 색을 맞추려면 BrandStyle 컴포넌트나 brandThemeCss()로 만든 CSS 파일을 쓴다.
+ * 서버 렌더링에서 첫 화면부터 색을 맞추려면 AppBrandStyle 컴포넌트나 brandThemeCss()로 만든 CSS 파일을 쓴다.
  */
 export function applyBrandTheme(color: string | BrandTheme): () => void {
   if (typeof document === 'undefined') return () => {};

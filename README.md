@@ -20,19 +20,19 @@ npm i github:qlalfdmlghk1/cws-ds
 import '@choi/ds/styles.css';   // 토큰 + 컴포넌트 스타일
 import '@choi/ds/fonts.css';    // Pretendard (이미 Pretendard를 불러오고 있으면 생략)
 
-import { Button, Modal, ToastProvider, useToast } from '@choi/ds';
+import { AppButton, AppModal, AppToastProvider, useToast } from '@choi/ds';
 
 export default function App() {
   return (
-    <ToastProvider>
+    <AppToastProvider>
       <Page />
-    </ToastProvider>
+    </AppToastProvider>
   );
 }
 
 function Page() {
   const { toast } = useToast();
-  return <Button onClick={() => toast('저장했어요')}>저장</Button>;
+  return <AppButton onClick={() => toast('저장했어요')}>저장</AppButton>;
 }
 ```
 
@@ -58,13 +58,19 @@ import '@choi/ds/fonts.css';
 
 | 그룹 | 컴포넌트 |
 | --- | --- |
-| Actions | `Button` `IconButton` `Chip` `DropdownMenu` |
-| Form | `TextInput` `Textarea` `Select` `MultiSelect` `Checkbox` `CheckGroup` `Radio` `RadioGroup` `Switch` `Datepicker` `Calendar` `Slider` `FileUpload` |
-| Data | `Table` `Card` `CardHeader` `CardBody` `CardFooter` `StatCard` `Badge` `Avatar` `AvatarGroup` `Accordion` `Divider` |
-| Navigation | `Tabs` `Pagination` `Breadcrumb` |
-| Feedback | `Modal` `ConfirmModal` `Toast` `ToastProvider` `useToast` `Tooltip` `Popover` `Skeleton` `Alert` `Spinner` `Progress` `Drawer` |
+| Actions | `AppButton` `AppIconButton` `AppChip` `AppDropdownMenu` |
+| Form | `AppTextInput` `AppTextarea` `AppSelect` `AppMultiSelect` `AppCheckbox` `AppCheckGroup` `AppRadio` `AppRadioGroup` `AppSwitch` `AppDatepicker` `AppCalendar` `AppSlider` `AppFileUpload` |
+| Data | `AppTable` `AppCard` `AppCardHeader` `AppCardBody` `AppCardFooter` `AppStatCard` `AppBadge` `AppAvatar` `AppAvatarGroup` `AppAccordion` `AppDivider` |
+| Navigation | `AppTabs` `AppPagination` `AppBreadcrumb` |
+| Feedback | `AppModal` `AppConfirmModal` `AppToast` `AppToastProvider` `useToast` `AppTooltip` `AppPopover` `AppSkeleton` `AppAlert` `AppSpinner` `AppProgress` `AppDrawer` |
 
 각 컴포넌트의 props 설명은 타입 정의(JSDoc)에 한국어로 들어 있어서 에디터에서 바로 보여요.
+
+## 이름 규칙
+
+컴포넌트는 모두 `App`으로 시작해요 (`AppButton`, `AppSelect`, `AppModal` …). Props 타입도 같아요 (`AppButtonProps`). 훅과 함수(`useToast`, `createBrandTheme`, `datePresets`)와 CSS 클래스(`cds-`)는 그대로예요.
+
+v0.3 이전 이름(`Button`, `Select` …)은 v0.4에서는 별칭으로 남아 있어요. 에디터에서 줄이 그어져 보이고, v0.5에서 지워요.
 
 ## 브랜드 색 바꾸기
 
@@ -72,8 +78,8 @@ import '@choi/ds/fonts.css';
 
 ```tsx
 // 1) React — 서버 렌더링 첫 화면부터 적용 (Next.js app/layout.tsx의 <head>에)
-import { BrandStyle } from '@choi/ds';
-<BrandStyle color="#0E9888" />
+import { AppBrandStyle } from '@choi/ds';
+<AppBrandStyle color="#0E9888" />
 ```
 
 ```bash
@@ -96,10 +102,10 @@ Storybook 툴바의 "브랜드 색"에서 여러 색으로 바로 비교할 수 
 ## 모달·스크롤 영역 안에서 쓰기
 
 **목록이 잘릴 때 — `portal`**
-Select·MultiSelect·Datepicker를 모달 본문처럼 스크롤되는 영역 안에 두면 목록이 그 안에 갇혀요. `portal`을 켜면 목록을 `document.body`에 띄워요. 트리거 위치를 따라가고, 아래 공간이 모자라면 위로 펼쳐요.
+AppSelect·AppMultiSelect·AppDatepicker를 모달 본문처럼 스크롤되는 영역 안에 두면 목록이 그 안에 갇혀요. `portal`을 켜면 목록을 `document.body`에 띄워요. 트리거 위치를 따라가고, 아래 공간이 모자라면 위로 펼쳐요.
 
 ```tsx
-<Select label="지역" options={regions} portal />
+<AppSelect label="지역" options={regions} portal />
 ```
 
 **겹치는 순서 — z-index 토큰**
@@ -108,7 +114,7 @@ Select·MultiSelect·Datepicker를 모달 본문처럼 스크롤되는 영역 �
 ```css
 :root {
   --z-popover: 20;   /* 트리거 아래 목록·메뉴 (portal 아닐 때) */
-  --z-modal: 100;    /* Modal · Drawer */
+  --z-modal: 100;    /* AppModal · AppDrawer */
   --z-portal: 150;   /* portal 목록 — 모달 위, 토스트 아래 */
   --z-toast: 200;
   --z-tooltip: 300;
@@ -116,7 +122,7 @@ Select·MultiSelect·Datepicker를 모달 본문처럼 스크롤되는 영역 �
 ```
 
 **라벨 없이 쓸 때**
-Select·MultiSelect·Datepicker는 `aria-label`(또는 `aria-labelledby`)을 받아요. 화면에 라벨이 없어도 스크린리더가 "조회 기간, 2026.11.01 – 11.07"처럼 읽어요. TextInput·Textarea에 넘긴 `aria-describedby`는 도움말 id와 합쳐져요.
+AppSelect·AppMultiSelect·AppDatepicker는 `aria-label`(또는 `aria-labelledby`)을 받아요. 화면에 라벨이 없어도 스크린리더가 "조회 기간, 2026.11.01 – 11.07"처럼 읽어요. AppTextInput·AppTextarea에 넘긴 `aria-describedby`는 도움말 id와 합쳐져요.
 
 ## 토큰
 
@@ -150,7 +156,7 @@ src/
 ├─ styles/                 ← tokens.css(생성) · base.css · components.css
 ├─ fonts/ · fonts.css      ← Pretendard
 ├─ internal/               ← 공용 훅·아이콘·날짜 유틸
-├─ theme/                  ← 브랜드 색 생성 (createBrandTheme · BrandStyle)
+├─ theme/                  ← 브랜드 색 생성 (createBrandTheme · AppBrandStyle)
 ├─ components/<Name>/      ← 컴포넌트별 .tsx + .stories.tsx
 ├─ stories/                ← 스토리용 데모 아이콘·레이아웃 (패키지에 안 들어감)
 ├─ Introduction.mdx        ← Storybook 첫 페이지
