@@ -10,7 +10,7 @@ npm에 올리지 않고 GitHub에서 바로 설치해요. 설치할 때 `prepare
 
 ```bash
 npm i github:qlalfdmlghk1/cws-ds
-# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.4.0
+# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.5.0
 ```
 
 ## 사용
@@ -70,7 +70,7 @@ import '@choi/ds/fonts.css';
 
 컴포넌트는 모두 `App`으로 시작해요 (`AppButton`, `AppSelect`, `AppModal` …). Props 타입도 같아요 (`AppButtonProps`). 훅과 함수(`useToast`, `createBrandTheme`, `datePresets`)와 CSS 클래스(`cds-`)는 그대로예요.
 
-v0.3 이전 이름(`Button`, `Select` …)은 v0.4에서는 별칭으로 남아 있어요. 에디터에서 줄이 그어져 보이고, v0.5에서 지워요.
+v0.3 이전 이름(`Button`, `Select` …)은 v0.5에서 지웠어요. 아직 예전 이름을 쓰는 코드는 앞에 `App`을 붙이면 돼요 (`Button` → `AppButton`, `ButtonProps` → `AppButtonProps`).
 
 ## 브랜드 색 바꾸기
 
