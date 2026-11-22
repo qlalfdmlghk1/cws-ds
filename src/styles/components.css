@@ -320,10 +320,21 @@ button.cds-card { width: 100%; font: inherit; }
 }
 .cds-tabs__tab.is-active .cds-tabs__count { background: var(--brand-soft); color: var(--brand-ink); }
 /* line: underline on the active tab */
-.cds-tabs--line .cds-tabs__list { gap: var(--space-6); border-bottom: 1px solid var(--line); }
-.cds-tabs--line .cds-tabs__tab { height: 44px; padding: 0 2px; margin-bottom: -1px; border-bottom: 2px solid transparent; border-radius: 0; }
+/* 기준선은 테두리 대신 안쪽 그림자. 목록이 가로 스크롤(overflow)이라 음수 마진으로 내린 밑줄은 1px 잘리고
+   세로 1px 스크롤이 생긴다. 탭의 2px 밑줄은 이 그림자 위에 그려져 기준선을 덮는다. */
+.cds-tabs--line .cds-tabs__list { gap: var(--space-6); box-shadow: inset 0 -1px 0 var(--line); }
+.cds-tabs--line .cds-tabs__tab { height: 44px; padding: 0 2px; border-bottom: 2px solid transparent; border-radius: 0; }
 .cds-tabs--line .cds-tabs__tab.is-active { color: var(--ink); font-weight: 600; border-bottom-color: var(--brand); }
-.cds-tabs--line .cds-tabs__tab:focus-visible { border-radius: var(--radius-sm); }
+/* 포커스 링도 목록 밖으로 나가면 잘리므로 탭 안쪽에 그린다. */
+.cds-tabs--line .cds-tabs__tab:focus-visible { border-radius: var(--radius-sm); box-shadow: inset 0 0 0 2px var(--focus); }
+/* actions: [탭 목록 | 버튼]. line이면 기준선은 줄 전체 폭으로, 탭이 스크롤돼도 버튼은 고정. */
+.cds-tabs__row { display: flex; align-items: center; gap: var(--space-4); min-width: 0; }
+.cds-tabs__row > .cds-tabs__list { flex: 1; min-width: 0; }
+.cds-tabs--line .cds-tabs__row { box-shadow: inset 0 -1px 0 var(--line); }
+.cds-tabs--line .cds-tabs__row > .cds-tabs__list { box-shadow: none; }
+.cds-tabs__actions { display: flex; flex: none; align-items: center; gap: var(--space-2); margin-left: auto; }
+.cds-tabs--segment .cds-tabs__row > .cds-tabs__list { flex: 0 1 auto; align-self: center; }
+.cds-tabs--segment .cds-tabs__row > .cds-tabs__list--full { flex: 1; }
 /* segment: pill buttons on a raised track */
 .cds-tabs--segment .cds-tabs__list { align-self: flex-start; padding: 4px; background: var(--surface-raised); border-radius: var(--radius-md); }
 .cds-tabs--segment .cds-tabs__list--full { align-self: stretch; }

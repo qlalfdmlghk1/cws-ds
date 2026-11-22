@@ -10,7 +10,7 @@ npm에 올리지 않고 GitHub에서 바로 설치해요. 설치할 때 `prepare
 
 ```bash
 npm i github:qlalfdmlghk1/cws-ds
-# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.5.0
+# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.6.0
 ```
 
 ## 사용
