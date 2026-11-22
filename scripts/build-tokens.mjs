@@ -21,7 +21,7 @@ css += `:root,\n[data-theme='${first}'] {\n${themed.map((x) => `  --${x.name}: $
 for (const th of rest) {
   css += `[data-theme='${th}'] {\n${themed.map((x) => `  --${x.name}: ${v(val(x, th))};`).join('\n')}\n}\n\n`;
 }
-const fixed = [...t.spacing.tokens, ...t.radius.tokens];
+const fixed = [...t.spacing.tokens, ...t.radius.tokens, ...(t.zIndex?.tokens ?? [])];
 css += `:root {\n${fixed.map((x) => `  --${x.name}: ${x.value};`).join('\n')}\n${Object.entries(t.type.families)
   .map(([k, s]) => `  --font-${k}: ${s};`)
   .join('\n')}\n}\n\n`;

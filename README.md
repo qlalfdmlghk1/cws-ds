@@ -10,7 +10,7 @@ npm에 올리지 않고 GitHub에서 바로 설치해요. 설치할 때 `prepare
 
 ```bash
 npm i github:qlalfdmlghk1/cws-ds
-# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.3.0
+# 버전 고정: npm i github:qlalfdmlghk1/cws-ds#v0.4.0
 ```
 
 ## 사용
@@ -92,6 +92,31 @@ const { light, dark, notes } = createBrandTheme('#EAB308'); // notes: 무엇을 
 ```
 
 Storybook 툴바의 "브랜드 색"에서 여러 색으로 바로 비교할 수 있어요.
+
+## 모달·스크롤 영역 안에서 쓰기
+
+**목록이 잘릴 때 — `portal`**
+Select·MultiSelect·Datepicker를 모달 본문처럼 스크롤되는 영역 안에 두면 목록이 그 안에 갇혀요. `portal`을 켜면 목록을 `document.body`에 띄워요. 트리거 위치를 따라가고, 아래 공간이 모자라면 위로 펼쳐요.
+
+```tsx
+<Select label="지역" options={regions} portal />
+```
+
+**겹치는 순서 — z-index 토큰**
+앱의 sticky 헤더보다 모달이 아래 깔리면 CSS 변수만 바꿔요 (기본값).
+
+```css
+:root {
+  --z-popover: 20;   /* 트리거 아래 목록·메뉴 (portal 아닐 때) */
+  --z-modal: 100;    /* Modal · Drawer */
+  --z-portal: 150;   /* portal 목록 — 모달 위, 토스트 아래 */
+  --z-toast: 200;
+  --z-tooltip: 300;
+}
+```
+
+**라벨 없이 쓸 때**
+Select·MultiSelect·Datepicker는 `aria-label`(또는 `aria-labelledby`)을 받아요. 화면에 라벨이 없어도 스크린리더가 "조회 기간, 2026.11.01 – 11.07"처럼 읽어요. TextInput·Textarea에 넘긴 `aria-describedby`는 도움말 id와 합쳐져요.
 
 ## 토큰
 

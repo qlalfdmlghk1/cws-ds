@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type InputHTMLAttributes, type ReactNode } from 'react';
 import { cx } from '../../internal/cx';
-import { useFieldId } from '../../internal/hooks';
+import { joinIds, useFieldId } from '../../internal/hooks';
 import { FieldLabel, FieldMessage } from '../../internal/Field';
 
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
@@ -37,7 +37,7 @@ export function TextInput({ label, helperText, error, size = 'md', iconLeft, suf
       <FieldLabel htmlFor={id} required={rest.required}>{label}</FieldLabel>
       <div className={cx('cds-input', `cds-input--${size}`, error && 'is-error', rest.disabled && 'is-disabled', rest.readOnly && 'is-readonly')}>
         {iconLeft && <span className="cds-input__icon" aria-hidden="true">{iconLeft}</span>}
-        <input {...rest} id={id} type={type} value={value} onChange={handle} className="cds-input__control" aria-invalid={error ? true : undefined} aria-describedby={descId} />
+        <input {...rest} id={id} type={type} value={value} onChange={handle} className="cds-input__control" aria-invalid={error ? true : undefined} aria-describedby={joinIds(rest['aria-describedby'], descId)} />
         {suffix && <span className="cds-input__suffix">{suffix}</span>}
       </div>
       <FieldMessage

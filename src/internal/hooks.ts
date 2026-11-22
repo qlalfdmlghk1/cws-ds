@@ -24,3 +24,9 @@ export function useControllable<T>(value: T | undefined, defaultValue: T, onChan
 
 export const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+/** id 여러 개를 공백으로 잇는다. 하나도 없으면 undefined (빈 속성을 안 남긴다). */
+export function joinIds(...ids: Array<string | false | null | undefined>): string | undefined {
+  const s = ids.filter(Boolean).join(' ');
+  return s || undefined;
+}

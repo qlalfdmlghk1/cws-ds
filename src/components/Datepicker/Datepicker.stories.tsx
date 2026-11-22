@@ -23,3 +23,8 @@ export const Range: Story = {
 };
 export const Error: Story = { args: { label: '시작일', required: true, error: '시작일을 골라 주세요.' } };
 export const Disabled: Story = { args: { label: '비활성', disabled: true, defaultValue: day(0) } };
+
+export const 라벨_없이: Story = {
+  args: { label: undefined, 'aria-label': '조회 기간', mode: 'range', defaultValue: P.last7.range(), helperText: '화면에 라벨이 없어도 스크린리더는 "조회 기간"으로 읽어요.' },
+  decorators: [(Story) => <div style={{ maxWidth: 'none', width: 360 }}><Story /></div>],
+};

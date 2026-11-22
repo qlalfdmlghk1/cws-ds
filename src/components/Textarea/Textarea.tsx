@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState, type ChangeEvent, type TextareaHTMLAttributes } from 'react';
 import { cx } from '../../internal/cx';
-import { useFieldId } from '../../internal/hooks';
+import { joinIds, useFieldId } from '../../internal/hooks';
 import { FieldLabel, FieldMessage } from '../../internal/Field';
 
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -56,7 +56,7 @@ export function Textarea({ label, helperText, error, rows = 4, autoResize, maxRo
           onChange={handle}
           className={cx('cds-textarea__control', (resize === 'none' || autoResize) && 'is-noresize', autoResize && 'is-auto')}
           aria-invalid={error ? true : undefined}
-          aria-describedby={descId}
+          aria-describedby={joinIds(rest['aria-describedby'], descId)}
         />
       </div>
       <FieldMessage

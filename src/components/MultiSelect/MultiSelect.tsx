@@ -1,12 +1,18 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { cx } from '../../internal/cx';
-import { useControllable, useFieldId } from '../../internal/hooks';
+import { joinIds, useControllable, useFieldId } from '../../internal/hooks';
 import { useOutside } from '../../internal/useOutside';
 import { CheckIcon, ChevronDownIcon, SearchIcon } from '../../internal/icons';
-import { FieldLabel, FieldMessage } from '../../internal/Field';
+import { FieldLabel, FieldMessage, fieldName, type FieldNameProps } from '../../internal/Field';
+import { MaybePortal, useFloating } from '../../internal/Floating';
 import type { SelectOption } from '../Select/Select';
 
-export interface MultiSelectProps {
+export interface MultiSelectProps extends FieldNameProps {
+  /**
+   * 목록을 document.body에 띄운다. 모달 본문처럼 스크롤되는 영역 안에서 목록이 잘릴 때 켠다.
+   * 트리거 위치를 따라가고, 아래 공간이 모자라면 위로 펼친다. 기본 false.
+   */
+  portal?: boolean;
   label?: string;
   options: SelectOption[];
   value?: string[];
@@ -31,7 +37,7 @@ export interface MultiSelectProps {
   className?: string;
 }
 
-export function MultiSelect({ label, options, value: valueProp, defaultValue = [], onChange, placeholder, searchable, searchPlaceholder, max, maxTagCount = 2, size = 'md', helperText, error, required, disabled, fullWidth, defaultOpen, id: idProp, className }: MultiSelectProps) {
+export function MultiSelect({ label, options, value: valueProp, defaultValue = [], onChange, placeholder, searchable, searchPlaceholder, max, maxTagCount = 2, size = 'md', helperText, error, required, disabled, fullWidth, defaultOpen, portal, id: idProp, className, ...nameProps }: MultiSelectProps) {
   const id = useFieldId(idProp);
   const [value, setValue] = useControllable(valueProp, defaultValue, onChange);
   const on = new Set(value);
@@ -42,9 +48,11 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
   const btnRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const popRef = useRef<HTMLDivElement>(null);
   const userOpened = useRef(false);
   const shown = q ? options.filter((o) => o.label.toLowerCase().includes(q.toLowerCase())) : options;
   const descId = error || helperText ? `${id}-desc` : undefined;
+  const { nameId, hidden } = fieldName(id, label, nameProps);
   const atMax = !!max && value.length >= max;
 
   const step = (from: number, dir: 1 | -1) => {
@@ -70,7 +78,8 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
     setOpen(false);
     if (refocus) btnRef.current?.focus();
   };
-  useOutside(rootRef, open, useCallback(() => setOpen(false), []));
+  useOutside([rootRef, popRef], open, useCallback(() => setOpen(false), []));
+  const floating = useFloating(open, btnRef, popRef, { enabled: !!portal, matchWidth: true });
   useEffect(() => {
     if (!open || !userOpened.current) return;
     (searchable ? inputRef.current : listRef.current)?.focus();
@@ -92,7 +101,8 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
     else if (k === 'ArrowUp') { e.preventDefault(); setActive(step(active, -1)); }
     else if (k === 'Enter' || (k === ' ' && !searchable)) { e.preventDefault(); toggle(shown[active]); }
     else if (k === 'Escape') { e.preventDefault(); e.stopPropagation(); close(true); }
-    else if (k === 'Tab') setOpen(false);
+    // 목록 안의 검색칸·버튼으로 Tab이 들어갔다가 목록과 함께 사라지지 않게, 닫고 트리거로 돌아온다.
+    else if (k === 'Tab') { e.preventDefault(); close(true); }
   };
   const labels = options.filter((o) => on.has(o.value)).map((o) => o.label);
   const activeId = active >= 0 ? `${id}-opt-${active}` : undefined;
@@ -100,6 +110,7 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
   return (
     <div ref={rootRef} className={cx('cds-field', 'cds-select', 'cds-mselect', fullWidth && 'cds-field--full', className)}>
       <FieldLabel as="span" id={`${id}-label`} required={required}>{label}</FieldLabel>
+      {hidden}
       <div className="cds-select__anchor">
         <button
           ref={btnRef}
@@ -109,11 +120,11 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
           className={cx('cds-input', `cds-input--${size}`, 'cds-select__trigger', error && 'is-error', disabled && 'is-disabled', open && 'is-open')}
           aria-haspopup="listbox"
           aria-expanded={open}
-          aria-labelledby={`${label ? `${id}-label ` : ''}${id}`}
+          aria-labelledby={joinIds(nameId, id)}
           aria-invalid={error ? true : undefined}
           aria-describedby={descId}
           onClick={() => (open ? close(false) : openList())}
-          onKeyDown={(e) => { if (e.key === 'ArrowDown') { e.preventDefault(); openList(); } }}
+          onKeyDown={(e) => { if (e.key === 'Escape' && open) { e.preventDefault(); close(false); } else if (e.key === 'ArrowDown') { e.preventDefault(); openList(); } }}
         >
           {labels.length ? (
             <span className="cds-mselect__tags">
@@ -126,7 +137,13 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
           <span className="cds-select__chevron" aria-hidden="true"><ChevronDownIcon /></span>
         </button>
         {open && (
-          <div className="cds-select__list cds-mselect__pop" onKeyDown={onPopKey}>
+          <MaybePortal enabled={portal}>
+          <div
+            ref={popRef}
+            className={cx('cds-select__list', 'cds-mselect__pop', portal && 'is-portal', floating.placement === 'top' && 'is-top')}
+            style={floating.style}
+            onKeyDown={onPopKey}
+          >
             {searchable && (
               <div className="cds-mselect__search">
                 <span className="cds-input__icon" aria-hidden="true"><SearchIcon /></span>
@@ -151,7 +168,7 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
               aria-multiselectable
               tabIndex={searchable ? undefined : -1}
               className="cds-mselect__list"
-              aria-labelledby={label ? `${id}-label` : undefined}
+              aria-labelledby={nameId}
               aria-activedescendant={!searchable ? activeId : undefined}
             >
               {shown.length ? (
@@ -190,6 +207,7 @@ export function MultiSelect({ label, options, value: valueProp, defaultValue = [
               )}
             </div>
           </div>
+          </MaybePortal>
         )}
       </div>
       <FieldMessage id={descId} error={error} helperText={helperText} />

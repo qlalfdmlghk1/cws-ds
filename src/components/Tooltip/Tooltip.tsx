@@ -79,12 +79,12 @@ export function Tooltip({ content, children, placement = 'top', delay = 400, dis
 
   useEffect(() => {
     if (!open || controlled) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') hide(); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { e.preventDefault(); hide(); } };
     const onScroll = () => hide();
-    document.addEventListener('keydown', onKey);
+    document.addEventListener('keydown', onKey, true);
     window.addEventListener('scroll', onScroll, true);
     return () => {
-      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('keydown', onKey, true);
       window.removeEventListener('scroll', onScroll, true);
     };
   }, [open, controlled]);

@@ -72,6 +72,11 @@
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-full: 9999px;
+  --z-popover: 20;
+  --z-modal: 100;
+  --z-portal: 150;
+  --z-toast: 200;
+  --z-tooltip: 300;
   --font-sans: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
 }
 

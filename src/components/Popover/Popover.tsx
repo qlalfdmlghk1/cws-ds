@@ -39,9 +39,10 @@ export function Popover({ children, content, title, open: openProp, defaultOpen 
       const f = panelRef.current.querySelector<HTMLElement>('[data-autofocus]') ?? panelRef.current.querySelector<HTMLElement>(FOCUSABLE);
       (f ?? panelRef.current).focus({ preventScroll: true });
     }
-    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') { e.stopPropagation(); close(true); } };
-    document.addEventListener('keydown', key);
-    return () => document.removeEventListener('keydown', key);
+    // capture 단계에서 먼저 받아 처리했다고 표시한다. 감싼 Modal·Drawer는 이 Esc로 닫히지 않는다.
+    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') { e.preventDefault(); close(true); } };
+    document.addEventListener('keydown', key, true);
+    return () => document.removeEventListener('keydown', key, true);
   }, [open, close]);
 
   const childProps = children.props as { onClick?: (e: unknown) => void };

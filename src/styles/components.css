@@ -73,7 +73,8 @@
 .cds-input--sm { height: 32px; padding: 0 var(--space-3); font-size: 13px; }
 .cds-input--md { height: 40px; padding: 0 var(--space-3); font-size: 14px; }
 .cds-input--lg { height: 48px; padding: 0 var(--space-4); font-size: 16px; }
-.cds-input:hover:not(.is-disabled):not(.is-readonly) { border-color: var(--ink-muted); }
+/* hover는 아무 상태도 없을 때만. 포커스·열림·에러 테두리를 덮지 않는다. */
+.cds-input:hover:not(.is-disabled):not(.is-readonly):not(:focus-within):not(.is-open):not(.is-error) { border-color: var(--ink-muted); }
 .cds-input:focus-within { border-color: var(--focus); box-shadow: 0 0 0 1px var(--focus); }
 .cds-input.is-error { border-color: var(--danger); }
 .cds-input.is-error:focus-within { box-shadow: 0 0 0 1px var(--danger); }
@@ -164,7 +165,7 @@
 .cds-select__chevron svg { width: 18px; height: 18px; }
 .cds-select__trigger.is-open .cds-select__chevron { transform: rotate(180deg); }
 .cds-select__list {
-  position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; right: 0; margin: 0; padding: var(--space-1);
+  position: absolute; z-index: var(--z-popover); top: calc(100% + 4px); left: 0; right: 0; margin: 0; padding: var(--space-1);
   list-style: none; max-height: 240px; overflow-y: auto; outline: none;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md);
   box-shadow: var(--shadow-md);
@@ -184,7 +185,7 @@
 .cds-select__tick svg { width: 16px; height: 16px; }
 
 /* Modal */
-.cds-modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: var(--space-6); }
+.cds-modal { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; align-items: center; justify-content: center; padding: var(--space-6); }
 .cds-modal__scrim { position: absolute; inset: 0; background: var(--scrim); animation: cds-fade .15s ease; }
 .cds-modal__panel {
   position: relative; display: flex; flex-direction: column; width: 100%; max-height: calc(100% - 48px);
@@ -206,7 +207,7 @@
 @media (prefers-reduced-motion: reduce) { .cds-modal__scrim, .cds-modal__panel { animation: none; } }
 
 /* Toast */
-.cds-toaster { position: fixed; z-index: 200; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); pointer-events: none; width: 100%; max-width: 420px; box-sizing: border-box; }
+.cds-toaster { position: fixed; z-index: var(--z-toast); display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); pointer-events: none; width: 100%; max-width: 420px; box-sizing: border-box; }
 .cds-toaster--bottom-center { bottom: 0; left: 50%; transform: translateX(-50%); }
 .cds-toaster--bottom-right { bottom: 0; right: 0; }
 .cds-toaster--top-right { top: 0; right: 0; }
@@ -240,7 +241,7 @@
 /* Tooltip — inverted: ink fill, surface text, in both themes */
 .cds-tooltip-anchor { display: inline-flex; }
 .cds-tooltip {
-  position: fixed; z-index: 300; max-width: 240px; padding: 6px 10px; box-sizing: border-box;
+  position: fixed; z-index: var(--z-tooltip); max-width: 240px; padding: 6px 10px; box-sizing: border-box;
   background: var(--ink); color: var(--surface); border-radius: var(--radius-sm);
   font-family: var(--font-sans); font-size: 12px; line-height: 16px; font-weight: 500;
   pointer-events: none; visibility: hidden;
@@ -429,7 +430,7 @@ button.cds-card { width: 100%; font: inherit; }
 .cds-cal__day:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--focus); z-index: 1; }
 
 .cds-dp__pop {
-  position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; display: flex; gap: var(--space-3);
+  position: absolute; z-index: var(--z-popover); top: calc(100% + 4px); left: 0; display: flex; gap: var(--space-3);
   padding: var(--space-3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
 }
 .cds-dp__pop--end { left: auto; right: 0; }
@@ -484,7 +485,7 @@ button.cds-chip:focus-visible, .cds-chip__main:focus-visible, .cds-chip__remove:
 /* DropdownMenu */
 .cds-menu-anchor { position: relative; display: inline-flex; }
 .cds-menu {
-  position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; min-width: 180px; padding: var(--space-1); outline: none;
+  position: absolute; z-index: var(--z-popover); top: calc(100% + 4px); left: 0; min-width: 180px; padding: var(--space-1); outline: none;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow-md);
   font-family: var(--font-sans);
 }
@@ -534,7 +535,7 @@ button.cds-chip:focus-visible, .cds-chip__main:focus-visible, .cds-chip__remove:
 
 /* Popover */
 .cds-popover {
-  position: absolute; z-index: 20; top: calc(100% + 6px); left: 0; width: 280px; box-sizing: border-box; padding: var(--space-4); outline: none;
+  position: absolute; z-index: var(--z-popover); top: calc(100% + 6px); left: 0; width: 280px; box-sizing: border-box; padding: var(--space-4); outline: none;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
   font-family: var(--font-sans); font-size: 14px; line-height: 22px; color: var(--ink); animation: cds-fade .12s ease;
 }
@@ -642,7 +643,7 @@ button.cds-chip:focus-visible, .cds-chip__main:focus-visible, .cds-chip__remove:
 @media (prefers-reduced-motion: reduce) { .cds-accordion__chevron { transition: none; } }
 
 /* Drawer — head, body and foot follow the Modal's spacing */
-.cds-drawer { position: fixed; inset: 0; z-index: 100; display: flex; }
+.cds-drawer { position: fixed; inset: 0; z-index: var(--z-modal); display: flex; }
 .cds-drawer--right { justify-content: flex-end; }
 .cds-drawer__scrim { position: absolute; inset: 0; background: var(--scrim); animation: cds-fade .15s ease; }
 .cds-drawer__panel {
@@ -735,3 +736,6 @@ button.cds-chip:focus-visible, .cds-chip__main:focus-visible, .cds-chip__remove:
 .cds-upload__remove svg { width: 16px; height: 16px; }
 .cds-upload__remove:hover { background: var(--surface-hover); color: var(--ink); }
 .cds-upload__remove:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--focus); }
+
+/* portal로 body에 띄운 목록·달력 — 자리(top·left·너비)는 useFloating이 인라인으로 정한다. */
+.cds-select__list.is-portal, .cds-dp__pop.is-portal { z-index: var(--z-portal); right: auto; bottom: auto; margin: 0; box-sizing: border-box; }
